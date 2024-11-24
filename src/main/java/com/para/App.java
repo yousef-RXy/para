@@ -1,7 +1,7 @@
 package com.para;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +9,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
-    // TODO change hash set to hashmap
-    public static HashSet<Movie> set = new HashSet<>();
+    public static HashMap<Integer, Movie> movieMap = new HashMap<>();
 
-    public static HashSet<Movie> getMovieSet() {
-        return set;
+    public static HashMap<Integer, Movie> getMovieMap() {
+        return movieMap;
     }
 
     @Override
@@ -30,7 +29,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         DatabaseConnection.connect();
-        set = DatabaseConnection.FetchMovies();
+        movieMap = DatabaseConnection.FetchMovies();
         launch();
     }
 

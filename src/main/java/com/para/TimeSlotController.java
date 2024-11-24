@@ -1,6 +1,7 @@
 package com.para;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import javafx.event.ActionEvent;
@@ -54,18 +55,13 @@ public class TimeSlotController extends Controller {
     Stage parentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     newStage.initOwner(parentStage);
 
-    HashSet<Movie> MovieSet = App.getMovieSet();
-    for (Movie movie : MovieSet) {
-      if (movie.getId() != this.movieId) {
-        continue;
-      }
-      for (TimeSlot timeSlot : movie.getTimeslots()) {
-        if (timeSlot.getId() != this.timeSlotId) {
-          continue;
-        }
-        timeSlot.bookSeat(controller, set);
-      }
-    }
+    HashMap<Integer, Movie> movieMap = App.getMovieMap();
+    Movie movie = movieMap.get(this.movieId);
+
+    HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
+    TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
+    timeSlot.bookSeat(controller, set);
+
     newStage.showAndWait();
   }
 

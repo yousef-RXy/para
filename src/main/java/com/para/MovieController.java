@@ -1,7 +1,7 @@
 package com.para;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,29 +16,26 @@ public class MovieController extends Controller {
 
   @Override
   public void setId(int movieId) {
-    System.out.println("set on MovieController " + movieId);
     this.movieId = movieId;
     onMovieIdSet();
   }
 
   private void onMovieIdSet() {
-    HashSet<Movie> set = App.getMovieSet();
-    for (Movie movie : set) {
-      if (movie.getId() != this.movieId) {
-        continue;
-      }
-      for (TimeSlot timeSlot : movie.getTimeslots()) {
-        Button timeSlotsButton = utils.addToVBox(timeSlot.toString(), timeSlot.getId());
-        timeSlotsButton.setOnAction(event -> {
-          try {
-            onTimeSlotClicked(event);
-          } catch (IOException e) {
-            Thread.interrupted();
-          }
-        });
+    HashMap<Integer, Movie> movieMap = App.getMovieMap();
+    Movie movie = movieMap.get(this.movieId);
+    HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
 
-        TimeSlotsController.getChildren().add(timeSlotsButton);
-      }
+    for (TimeSlot timeSlot : timeSlotMap.values()) {
+      Button timeSlotsButton = utils.addToVBox(timeSlot.toString(), timeSlot.getId());
+      timeSlotsButton.setOnAction(event -> {
+        try {
+          onTimeSlotClicked(event);
+        } catch (IOException e) {
+          Thread.interrupted();
+        }
+      });
+
+      TimeSlotsController.getChildren().add(timeSlotsButton);
     }
   }
 
