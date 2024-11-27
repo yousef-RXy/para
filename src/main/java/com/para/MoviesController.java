@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class Movies {
+public class MoviesController {
 
   @FXML
   private Button Movie1;

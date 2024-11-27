@@ -7,13 +7,13 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class Test {
-  static Semaphore mutxSemaphore = new Semaphore(1);
+  static Semaphore mutexSemaphore = new Semaphore(1);
 
-  public void bookSeat(Message controller, HashSet<String> set, Stage stage) {
+  public void bookSeat(MessageController controller, HashSet<String> set, Stage stage) {
     new Thread(() -> {
       try {
         Platform.runLater(() -> controller.setMessage("Processing seats: " + set.toString()));
-        mutxSemaphore.acquire();
+        mutexSemaphore.acquire();
 
         Thread.sleep(5000);
 
@@ -21,7 +21,7 @@ public class Test {
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       } finally {
-        mutxSemaphore.release();
+        mutexSemaphore.release();
       }
     }).start();
   }

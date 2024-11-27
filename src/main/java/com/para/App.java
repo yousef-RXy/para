@@ -1,6 +1,7 @@
 package com.para;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,13 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        DatabaseConnection.connect();
+        HashSet<Movie> set = DatabaseConnection.FetchMovies();
+
+        for (Movie movie : set) {
+            System.out.println(movie);
+        }
+
         launch();
     }
 

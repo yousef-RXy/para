@@ -3,7 +3,7 @@ package com.para;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class Message {
+public class MessageController {
 
   @FXML
   private Label message;
