@@ -33,18 +33,5 @@ public class MoviesController extends Controller {
   @FXML
   void onMovieClicked(ActionEvent event) throws IOException {
     utils.onButtonToDisplayClicked("movie", event);
-    // Stage newStage = new Stage();
-    // FXMLLoader fxmlLoader = App.loadFXML("movie");
-    // Parent loader = fxmlLoader.load();
-
-    // MovieController controller = fxmlLoader.getController();
-    // Button button = (Button) (event.getSource());
-    // int id = Integer.parseInt(button.getId());
-    // controller.setId(id);
-
-    // Scene scene = new Scene(loader);
-    // newStage.setScene(scene);
-    // newStage.initModality(Modality.WINDOW_MODAL);
-    // newStage.show();
   }
 }

@@ -53,6 +53,7 @@ public class TimeSlotController extends Controller {
 
   @Override
   public void setParentId(int id) {
+    System.out.println("done");
     this.movieId = id;
   }
 
@@ -60,11 +61,15 @@ public class TimeSlotController extends Controller {
   void toggleChooseSeat(ActionEvent event) {
     CheckBox checkBox = (CheckBox) (event.getSource());
     String id = checkBox.getId();
-    System.out.println(id);
     if (this.set.contains(id))
       this.set.remove(id);
     else
       this.set.add(id);
+  }
+
+  @FXML
+  void onBackButtonClicked(ActionEvent event) throws IOException {
+    utils.returnParent("movie", movieId, 0);
   }
 
   @FXML
@@ -74,7 +79,8 @@ public class TimeSlotController extends Controller {
     MessageController controller = fxmlLoader.getController();
 
     Stage newStage = new Stage();
-    newStage.setTitle("Booking in Progress Movie: " + movieId + " timeSlot: " + timeSlotId);
+    newStage.setTitle("Booking in Progress Movie: " + movieId + " timeSlot: " +
+        timeSlotId);
 
     Scene scene = new Scene(loader);
     newStage.setScene(scene);
@@ -91,6 +97,17 @@ public class TimeSlotController extends Controller {
     timeSlot.bookSeat(controller, set);
 
     newStage.showAndWait();
-  }
+    // HashMap<Integer, Movie> movieMap = App.getMovieMap();
+    // Movie movie = movieMap.get(this.movieId);
 
+    // HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
+    // TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
+
+    // FXMLLoader fxmlLoader = App.setRoot("message");
+    // MessageController controller = fxmlLoader.getController();
+
+    // controller.setId(timeSlotId);
+    // controller.setParentId(movieId);
+    // timeSlot.bookSeat(controller, set);
+  }
 }

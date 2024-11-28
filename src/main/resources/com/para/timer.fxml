@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="149.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.para.Timer">
+   <children>
+      <Button layoutX="105.0" layoutY="14.0" mnemonicParsing="false" onAction="#onStartClicked" text="Start" />
+      <Label fx:id="currentTime" alignment="CENTER" layoutX="87.0" layoutY="51.0" prefHeight="17.0" prefWidth="77.0" text="0.000s" textAlignment="CENTER" />
+      <Label fx:id="totalTime" alignment="CENTER" layoutX="87.0" layoutY="75.0" prefHeight="17.0" prefWidth="77.0" text="0.000s" textAlignment="CENTER" />
+      <Button layoutX="107.0" layoutY="99.0" mnemonicParsing="false" onAction="#onEndClicked" text="End" />
+   </children>
+</AnchorPane>

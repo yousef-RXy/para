@@ -24,12 +24,14 @@ public class TimeSlot {
   void bookSeat(MessageController controller, HashSet<String> seatsSet) {
     new Thread(() -> {
       try {
-        Platform.runLater(() -> controller.setMessage("Processing seats: " + seatsSet.toString()));
+        Platform.runLater(() -> controller.setMessage("Processing seats: " +
+            seatsSet.toString()));
         mutexSemaphore.acquire();
         for (String seatNum : seatsSet) {
           if (DatabaseConnection.isBooked(this.id, seatNum)) {
             Thread.sleep(5000);
-            Platform.runLater(() -> controller.setMessage("Seat Already booked: " + seatNum));
+            Platform.runLater(() -> controller.setMessage("Seat Already booked: " +
+                seatNum));
             return;
           }
         }
@@ -38,13 +40,36 @@ public class TimeSlot {
         }
         Thread.sleep(5000);
 
-        Platform.runLater(() -> controller.setMessage("Seats booked: " + seatsSet.toString()));
+        Platform.runLater(() -> controller.setMessage("Seats booked: " +
+            seatsSet.toString()));
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       } finally {
         mutexSemaphore.release();
       }
     }).start();
+
+    // Platform.runLater(() -> controller.setMessage("Processing seats: " +
+    // seatsSet.toString()));
+    // try {
+    // Thread.sleep(5000);
+    // } catch (InterruptedException e) {
+    // Thread.currentThread().interrupt();
+    // }
+
+    // for (String seatNum : seatsSet) {
+    // if (DatabaseConnection.isBooked(this.id, seatNum)) {
+    // Platform.runLater(() -> controller.setMessage("Seat Already booked: " +
+    // seatNum));
+    // return;
+    // }
+    // }
+    // for (String seatNum : seatsSet) {
+    // DatabaseConnection.BookSeat(this.id, seatNum);
+    // }
+
+    // Platform.runLater(() -> controller.setMessage("Seats booked: " +
+    // seatsSet.toString()));
   }
 
   @Override

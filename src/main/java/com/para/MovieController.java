@@ -43,19 +43,10 @@ public class MovieController extends Controller {
   void onTimeSlotClicked(ActionEvent event) throws IOException {
     Controller controller = utils.onButtonToDisplayClicked("timeSlots", event);
     controller.setParentId(movieId);
+  }
 
-    // Stage newStage = new Stage();
-    // FXMLLoader fxmlLoader = App.loadFXML("timeSlots");
-    // Parent loader = fxmlLoader.load();
-
-    // TimeSlotController controller = fxmlLoader.getController();
-    // Button button = (Button) (event.getSource());
-    // int id = Integer.parseInt(button.getId());
-    // controller.setId(id);
-
-    // Scene scene = new Scene(loader);
-    // newStage.setScene(scene);
-    // newStage.initModality(Modality.WINDOW_MODAL);
-    // newStage.show();
+  @FXML
+  void onBackButtonClicked(ActionEvent event) throws IOException {
+    utils.returnParent("movies", 0, 0);
   }
 }

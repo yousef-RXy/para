@@ -37,5 +37,22 @@ public class utils {
     newStage.show();
 
     return controller;
+
+    // FXMLLoader fxmlLoader = App.setRoot(fxml);
+    // Controller controller = fxmlLoader.getController();
+    // Button button = (Button) (event.getSource());
+    // int id = Integer.parseInt(button.getId());
+    // controller.setId(id);
+
+    // return controller;
+  }
+
+  public static Controller returnParent(String fxml, int id, int parentId) throws IOException {
+    FXMLLoader fxmlLoader = App.setRoot(fxml);
+    Controller controller = fxmlLoader.getController();
+    controller.setId(id);
+    controller.setParentId(parentId);
+
+    return controller;
   }
 }
