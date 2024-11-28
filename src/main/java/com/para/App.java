@@ -5,31 +5,31 @@ import java.util.HashSet;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class App extends Application {
+    // TODO change hash set to hashmap
+    public static HashSet<Movie> set = new HashSet<>();
+
+    public static HashSet<Movie> getMovieSet() {
+        return set;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
-        Scene scene = new Scene(loadFXML("movies"));
+        Scene scene = new Scene(loadFXML("movies").load());
         stage.setScene(scene);
         stage.show();
     }
 
-    static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    public static FXMLLoader loadFXML(String fxml) throws IOException {
+        return new FXMLLoader(App.class.getResource(fxml + ".fxml"));
     }
 
     public static void main(String[] args) {
         DatabaseConnection.connect();
-        HashSet<Movie> set = DatabaseConnection.FetchMovies();
-
-        for (Movie movie : set) {
-            System.out.println(movie);
-        }
+        set = DatabaseConnection.FetchMovies();
 
         launch();
     }

@@ -18,4 +18,12 @@ public class Movie {
     return this.name;
   }
 
+  public int getId() {
+    return id;
+  }
+
+  HashSet<String> getTimeslots() {
+    return set;
+  }
+
 }

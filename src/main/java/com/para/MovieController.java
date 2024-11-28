@@ -9,47 +9,61 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class MovieController {
-  HashSet<String> set = new HashSet<>();
-  Test test = new Test();
+  int movieId;
 
   @FXML
-  public void initialize() {
-    System.out.println("Controller initialized!");
+  private VBox TimeSlotsController;
+
+  public void setMovieId(int movieId) {
+    this.movieId = movieId;
+    onMovieIdSet();
+  }
+
+  private void onMovieIdSet() {
+    System.out.println("Movie ID set: " + this.movieId);
+    HashSet<Movie> set = App.getMovieSet();
+    for (Movie movie : set) {
+      if (movie.getId() != this.movieId) {
+        continue;
+      }
+      for (String timeSlot : movie.getTimeslots()) {
+        Button movieButton = new Button(timeSlot);
+        movieButton.setPrefWidth(200);
+        movieButton.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
+        movieButton.setId("" + this.movieId);
+
+        movieButton.setOnAction(event -> {
+          try {
+            onMovieClicked(event);
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+
+        TimeSlotsController.getChildren().add(movieButton);
+      }
+    }
   }
 
   @FXML
-  void toggleChooseSeat(ActionEvent event) {
-    CheckBox checkBox = (CheckBox) (event.getSource());
-    String id = checkBox.getId();
-    if (this.set.contains(id))
-      this.set.remove(id);
-    else
-      this.set.add(id);
-  }
-
-  @FXML
-  void onBookPress(ActionEvent event) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("message.fxml"));
-    Parent loader = fxmlLoader.load();
-    MessageController controller = fxmlLoader.getController();
-
+  void onMovieClicked(ActionEvent event) throws IOException {
     Stage newStage = new Stage();
-    newStage.setTitle("Booking in Progress");
+    FXMLLoader fxmlLoader = App.loadFXML("movie");
+    Parent loader = fxmlLoader.load();
+
+    MovieController controller = fxmlLoader.getController();
+    Button button = (Button) (event.getSource());
+    int id = Integer.parseInt(button.getId());
+    controller.setMovieId(id);
 
     Scene scene = new Scene(loader);
     newStage.setScene(scene);
-
     newStage.initModality(Modality.WINDOW_MODAL);
-    Stage parentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    newStage.initOwner(parentStage);
-
-    test.bookSeat(controller, set, newStage);
-    newStage.showAndWait();
+    newStage.show();
   }
-
 }
