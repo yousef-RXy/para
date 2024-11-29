@@ -32,26 +32,22 @@ public class MovieController {
         continue;
       }
       for (String timeSlot : movie.getTimeslots()) {
-        Button movieButton = new Button(timeSlot);
-        movieButton.setPrefWidth(200);
-        movieButton.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-        movieButton.setId("" + this.movieId);
-
-        movieButton.setOnAction(event -> {
+        Button timeSlotsButton = utils.addToVBox(timeSlot, this.movieId);
+        timeSlotsButton.setOnAction(event -> {
           try {
-            onMovieClicked(event);
+            onTimeSlotClicked(event);
           } catch (IOException e) {
             e.printStackTrace();
           }
         });
 
-        TimeSlotsController.getChildren().add(movieButton);
+        TimeSlotsController.getChildren().add(timeSlotsButton);
       }
     }
   }
 
   @FXML
-  void onMovieClicked(ActionEvent event) throws IOException {
+  void onTimeSlotClicked(ActionEvent event) throws IOException {
     Stage newStage = new Stage();
     FXMLLoader fxmlLoader = App.loadFXML("movie");
     Parent loader = fxmlLoader.load();

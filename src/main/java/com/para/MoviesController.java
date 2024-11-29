@@ -22,11 +22,7 @@ public class MoviesController {
   public void initialize() {
     HashSet<Movie> set = App.getMovieSet();
     for (Movie movie : set) {
-      Button movieButton = new Button(movie.toString());
-      movieButton.setPrefWidth(200);
-      movieButton.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));
-      movieButton.setId("" + movie.getId());
-
+      Button movieButton = utils.addToVBox(movie.toString(), movie.getId());
       movieButton.setOnAction(event -> {
         try {
           onMovieClicked(event);
