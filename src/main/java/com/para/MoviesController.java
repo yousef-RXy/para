@@ -5,15 +5,10 @@ import java.util.HashSet;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
-public class MoviesController {
+public class MoviesController extends Controller {
 
   @FXML
   private VBox MoviesContainer;
@@ -37,18 +32,19 @@ public class MoviesController {
 
   @FXML
   void onMovieClicked(ActionEvent event) throws IOException {
-    Stage newStage = new Stage();
-    FXMLLoader fxmlLoader = App.loadFXML("movie");
-    Parent loader = fxmlLoader.load();
+    utils.onButtonToDisplayClicked("movie", event);
+    // Stage newStage = new Stage();
+    // FXMLLoader fxmlLoader = App.loadFXML("movie");
+    // Parent loader = fxmlLoader.load();
 
-    MovieController controller = fxmlLoader.getController();
-    Button button = (Button) (event.getSource());
-    int id = Integer.parseInt(button.getId());
-    controller.setMovieId(id);
+    // MovieController controller = fxmlLoader.getController();
+    // Button button = (Button) (event.getSource());
+    // int id = Integer.parseInt(button.getId());
+    // controller.setId(id);
 
-    Scene scene = new Scene(loader);
-    newStage.setScene(scene);
-    newStage.initModality(Modality.WINDOW_MODAL);
-    newStage.show();
+    // Scene scene = new Scene(loader);
+    // newStage.setScene(scene);
+    // newStage.initModality(Modality.WINDOW_MODAL);
+    // newStage.show();
   }
 }

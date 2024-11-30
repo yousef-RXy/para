@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class Movie {
   int id;
   String name;
-  HashSet<String> set;
+  HashSet<TimeSlot> set;
 
   public Movie(int id, String name) {
     this.id = id;
@@ -22,7 +22,7 @@ public class Movie {
     return id;
   }
 
-  HashSet<String> getTimeslots() {
+  HashSet<TimeSlot> getTimeslots() {
     return set;
   }
 

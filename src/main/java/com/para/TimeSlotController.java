@@ -13,10 +13,16 @@ import javafx.scene.control.CheckBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class TimeSlotsController {
-
+public class TimeSlotController extends Controller {
+  int timeSlotId;
   HashSet<String> set = new HashSet<>();
   Test test = new Test();
+
+  @Override
+  public void setId(int id) {
+    System.out.println("set on TimeSlotController " + id);
+    this.timeSlotId = id;
+  }
 
   @FXML
   void toggleChooseSeat(ActionEvent event) {
@@ -29,7 +35,7 @@ public class TimeSlotsController {
   }
 
   @FXML
-  void onBookPress(ActionEvent event) throws IOException {
+  void onBookClicked(ActionEvent event) throws IOException {
     FXMLLoader fxmlLoader = App.loadFXML("message");
     Parent loader = fxmlLoader.load();
     MessageController controller = fxmlLoader.getController();

@@ -43,13 +43,15 @@ public class DatabaseConnection {
     return set;
   }
 
-  public static HashSet<String> FetchTimeSlots(int id) {
-    String sql = "SELECT * FROM time_slots where id=" + id;
-    HashSet<String> set = new HashSet<>();
+  public static HashSet<TimeSlot> FetchTimeSlots(int movieId) {
+    String sql = "SELECT * FROM time_slots where movie_id=" + movieId;
+    HashSet<TimeSlot> set = new HashSet<>();
     try {
       ResultSet result = executeQuery(sql);
       while (result.next()) {
-        set.add(result.getString("time_slot"));
+        int id = result.getInt("id");
+        String timeSlot = result.getString("time_slot");
+        set.add(new TimeSlot(id, timeSlot));
       }
     } catch (SQLException e) {
       Thread.interrupted();
