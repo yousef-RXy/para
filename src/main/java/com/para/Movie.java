@@ -13,11 +13,6 @@ public class Movie {
     this.set = DatabaseConnection.FetchTimeSlots(id);
   }
 
-  @Override
-  public String toString() {
-    return this.name;
-  }
-
   public int getId() {
     return id;
   }
@@ -26,4 +21,8 @@ public class Movie {
     return set;
   }
 
+  @Override
+  public String toString() {
+    return this.name;
+  }
 }

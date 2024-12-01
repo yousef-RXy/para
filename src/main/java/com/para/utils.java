@@ -20,7 +20,7 @@ public class utils {
     return button;
   }
 
-  public static void onButtonToDisplayClicked(String fxml, ActionEvent event) throws IOException {
+  public static Controller onButtonToDisplayClicked(String fxml, ActionEvent event) throws IOException {
     Stage newStage = new Stage();
     FXMLLoader fxmlLoader = App.loadFXML(fxml);
     Parent loader = fxmlLoader.load();
@@ -34,5 +34,7 @@ public class utils {
     newStage.setScene(scene);
     newStage.initModality(Modality.WINDOW_MODAL);
     newStage.show();
+
+    return controller;
   }
 }

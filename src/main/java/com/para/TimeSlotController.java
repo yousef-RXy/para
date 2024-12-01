@@ -15,13 +15,17 @@ import javafx.stage.Stage;
 
 public class TimeSlotController extends Controller {
   int timeSlotId;
+  int movieId;
   HashSet<String> set = new HashSet<>();
-  Test test = new Test();
 
   @Override
   public void setId(int id) {
-    System.out.println("set on TimeSlotController " + id);
     this.timeSlotId = id;
+  }
+
+  @Override
+  public void setParentId(int id) {
+    this.movieId = id;
   }
 
   @FXML
@@ -50,7 +54,18 @@ public class TimeSlotController extends Controller {
     Stage parentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
     newStage.initOwner(parentStage);
 
-    test.bookSeat(controller, set, newStage);
+    HashSet<Movie> MovieSet = App.getMovieSet();
+    for (Movie movie : MovieSet) {
+      if (movie.getId() != this.movieId) {
+        continue;
+      }
+      for (TimeSlot timeSlot : movie.getTimeslots()) {
+        if (timeSlot.getId() != this.timeSlotId) {
+          continue;
+        }
+        timeSlot.bookSeat(controller, set);
+      }
+    }
     newStage.showAndWait();
   }
 

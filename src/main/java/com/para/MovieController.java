@@ -44,7 +44,8 @@ public class MovieController extends Controller {
 
   @FXML
   void onTimeSlotClicked(ActionEvent event) throws IOException {
-    utils.onButtonToDisplayClicked("timeSlots", event);
+    Controller controller = utils.onButtonToDisplayClicked("timeSlots", event);
+    controller.setParentId(movieId);
 
     // Stage newStage = new Stage();
     // FXMLLoader fxmlLoader = App.loadFXML("timeSlots");
