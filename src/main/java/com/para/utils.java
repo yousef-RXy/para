@@ -30,6 +30,7 @@ public class utils {
     int id = Integer.parseInt(button.getId());
     controller.setId(id);
 
+    newStage.setTitle(fxml + " " + id);
     Scene scene = new Scene(loader);
     newStage.setScene(scene);
     newStage.initModality(Modality.WINDOW_MODAL);

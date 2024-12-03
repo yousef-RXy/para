@@ -22,7 +22,7 @@ public class MoviesController extends Controller {
         try {
           onMovieClicked(event);
         } catch (IOException e) {
-          e.printStackTrace();
+          Thread.interrupted();
         }
       });
 

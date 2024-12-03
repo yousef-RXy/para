@@ -58,4 +58,32 @@ public class DatabaseConnection {
     }
     return set;
   }
+
+  public static boolean isBooked(int timeSlotId, String seatNum) {
+    String sql = "SELECT * FROM `seats` WHERE time_slot_id=" + timeSlotId + " AND seat_num='" + seatNum + "'";
+    try {
+      ResultSet result = executeQuery(sql);
+      if (result.next())
+        return result.getBoolean("is_booked");
+    } catch (SQLException e) {
+      Thread.interrupted();
+    }
+    return false;
+  }
+
+  public static boolean BookSeat(int timeSlotId, String seatNum) {
+    String sql = "INSERT INTO `seats`(`time_slot_id`, `seat_num`, `is_booked`) VALUES (?, ?, 1)";
+    try {
+      PreparedStatement stmt = connection.prepareStatement(sql);
+      stmt.setInt(1, timeSlotId);
+      stmt.setString(2, seatNum);
+
+      int rowsAffected = stmt.executeUpdate();
+
+      return rowsAffected > 0;
+    } catch (SQLException e) {
+      Thread.interrupted();
+      return false;
+    }
+  }
 }

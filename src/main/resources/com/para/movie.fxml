@@ -3,8 +3,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="199.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.para.MovieController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.para.MovieController">
    <children>
-      <VBox fx:id="TimeSlotsController" layoutX="26.0" layoutY="28.0" prefHeight="246.0" prefWidth="147.0" />
+      <VBox fx:id="TimeSlotsController" layoutX="50.0" layoutY="50.0" prefHeight="250.0" prefWidth="250.0" />
    </children>
 </AnchorPane>

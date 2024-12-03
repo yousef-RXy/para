@@ -24,7 +24,16 @@ public class TimeSlot {
       try {
         Platform.runLater(() -> controller.setMessage("Processing seats: " + seatsSet.toString()));
         mutexSemaphore.acquire();
-
+        for (String seatNum : seatsSet) {
+          if (DatabaseConnection.isBooked(this.id, seatNum)) {
+            Thread.sleep(5000);
+            Platform.runLater(() -> controller.setMessage("Seat Already booked: " + seatNum));
+            return;
+          }
+        }
+        for (String seatNum : seatsSet) {
+          DatabaseConnection.BookSeat(this.id, seatNum);
+        }
         Thread.sleep(5000);
 
         Platform.runLater(() -> controller.setMessage("Seats booked: " + seatsSet.toString()));

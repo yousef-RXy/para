@@ -45,7 +45,7 @@ public class TimeSlotController extends Controller {
     MessageController controller = fxmlLoader.getController();
 
     Stage newStage = new Stage();
-    newStage.setTitle("Booking in Progress");
+    newStage.setTitle("Booking in Progress Movie: " + movieId + " timeSlot: " + timeSlotId);
 
     Scene scene = new Scene(loader);
     newStage.setScene(scene);

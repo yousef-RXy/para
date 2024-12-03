@@ -33,7 +33,7 @@ public class MovieController extends Controller {
           try {
             onTimeSlotClicked(event);
           } catch (IOException e) {
-            e.printStackTrace();
+            Thread.interrupted();
           }
         });
 
