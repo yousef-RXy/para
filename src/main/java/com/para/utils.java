@@ -11,7 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class utils {
-  public static Button addToVBox(String text, int id) {
+  public static Button addButtonToVBox(String text, int id) {
     Button button = new Button(text);
     button.setPrefWidth(200);
     button.setPadding(new javafx.geometry.Insets(10, 10, 10, 10));

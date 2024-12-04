@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -19,9 +20,35 @@ public class TimeSlotController extends Controller {
   int movieId;
   HashSet<String> set = new HashSet<>();
 
+  @FXML
+  private GridPane seatsContainer;
+
   @Override
   public void setId(int id) {
     this.timeSlotId = id;
+    onTimeSlotIdSet();
+  }
+
+  private void onTimeSlotIdSet() {
+    char[] availableRows = { 'A', 'B', 'C', 'D', 'F' };
+
+    for (int j = 0; j < availableRows.length; j++) {
+      char rowChar = availableRows[j];
+      for (int i = 1; i <= 10; i++) {
+        int colIndex = i - 1;
+        CheckBox seat = new CheckBox();
+        String id = "" + rowChar + i;
+        seat.setId(id);
+
+        if (DatabaseConnection.isBooked(this.timeSlotId, id)) {
+          seat.setDisable(true);
+          seat.setSelected(true);
+        }
+
+        seat.setOnAction(this::toggleChooseSeat);
+        seatsContainer.add(seat, colIndex > 4 ? colIndex + 15 : colIndex, j);
+      }
+    }
   }
 
   @Override
@@ -33,6 +60,7 @@ public class TimeSlotController extends Controller {
   void toggleChooseSeat(ActionEvent event) {
     CheckBox checkBox = (CheckBox) (event.getSource());
     String id = checkBox.getId();
+    System.out.println(id);
     if (this.set.contains(id))
       this.set.remove(id);
     else

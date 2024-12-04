@@ -2,6 +2,7 @@ package com.para;
 
 import java.io.IOException;
 import java.util.HashMap;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class MoviesController extends Controller {
   public void initialize() {
     HashMap<Integer, Movie> movieMap = App.getMovieMap();
     for (Movie movie : movieMap.values()) {
-      Button movieButton = utils.addToVBox(movie.toString(), movie.getId());
+      Button movieButton = utils.addButtonToVBox(movie.toString(), movie.getId());
       movieButton.setOnAction(event -> {
         try {
           onMovieClicked(event);

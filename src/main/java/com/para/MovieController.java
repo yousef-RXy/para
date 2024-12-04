@@ -12,7 +12,7 @@ public class MovieController extends Controller {
   int movieId;
 
   @FXML
-  private VBox TimeSlotsController;
+  private VBox TimeSlotsContainer;
 
   @Override
   public void setId(int movieId) {
@@ -26,7 +26,7 @@ public class MovieController extends Controller {
     HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
 
     for (TimeSlot timeSlot : timeSlotMap.values()) {
-      Button timeSlotsButton = utils.addToVBox(timeSlot.toString(), timeSlot.getId());
+      Button timeSlotsButton = utils.addButtonToVBox(timeSlot.toString(), timeSlot.getId());
       timeSlotsButton.setOnAction(event -> {
         try {
           onTimeSlotClicked(event);
@@ -35,7 +35,7 @@ public class MovieController extends Controller {
         }
       });
 
-      TimeSlotsController.getChildren().add(timeSlotsButton);
+      TimeSlotsContainer.getChildren().add(timeSlotsButton);
     }
   }
 

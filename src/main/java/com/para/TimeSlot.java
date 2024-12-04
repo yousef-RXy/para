@@ -5,6 +5,8 @@ import java.util.concurrent.Semaphore;
 
 import javafx.application.Platform;
 
+//TODO render TimeSlots on demand
+//SELECT COUNT(*) AS bookedSeatsCounter FROM `seats` WHERE seat_num='A1' and is_booked = 1
 public class TimeSlot {
   int id;
   String timeSlot;
