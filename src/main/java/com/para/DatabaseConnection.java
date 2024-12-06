@@ -61,6 +61,24 @@ public class DatabaseConnection {
     return map;
   }
 
+  public static boolean isTimeSlotsAvailable(int timeSlotId, int max) {
+    String sql = "SELECT COUNT(*) AS bookedSeatsCounter FROM seats WHERE is_booked=1 AND time_slot_id=" + timeSlotId;
+    boolean map = false;
+
+    try {
+      ResultSet result = executeQuery(sql);
+      while (result.next()) {
+        int counter = result.getInt("bookedSeatsCounter");
+        if (counter < max) {
+          map = true;
+        }
+      }
+    } catch (SQLException e) {
+      Thread.interrupted();
+    }
+    return map;
+  }
+
   public static boolean isBooked(int timeSlotId, String seatNum) {
     String sql = "SELECT * FROM `seats` WHERE time_slot_id=" + timeSlotId + " AND seat_num='" + seatNum + "'";
     try {
@@ -86,6 +104,32 @@ public class DatabaseConnection {
     } catch (SQLException e) {
       Thread.interrupted();
       return false;
+    }
+  }
+
+  public static int availableSnacks(String type) {
+    String sql = "SELECT count FROM snacks WHERE type = '" + type + "'";
+    int count = -1;
+    try {
+      ResultSet result = executeQuery(sql);
+      if (result.next())
+        count = result.getInt("count");
+    } catch (SQLException e) {
+      Thread.interrupted();
+    }
+    return count;
+  }
+
+  public static void increaseSnacks(String type, int value) {
+    String sql = "UPDATE snacks SET count = ? + (SELECT count FROM snacks WHERE type=?) WHERE type=?";
+    try {
+      PreparedStatement stmt = connection.prepareStatement(sql);
+      stmt.setInt(1, value);
+      stmt.setString(2, type);
+      stmt.setString(3, type);
+      stmt.executeUpdate();
+    } catch (SQLException e) {
+      Thread.interrupted();
     }
   }
 }

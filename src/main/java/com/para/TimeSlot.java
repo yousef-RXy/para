@@ -5,12 +5,10 @@ import java.util.concurrent.Semaphore;
 
 import javafx.application.Platform;
 
-//TODO render TimeSlots on demand
-//SELECT COUNT(*) AS bookedSeatsCounter FROM `seats` WHERE seat_num='A1' and is_booked = 1
 public class TimeSlot {
-  int id;
-  String timeSlot;
-  Semaphore mutexSemaphore = new Semaphore(1);
+  private int id;
+  private String timeSlot;
+  private Semaphore mutexSemaphore = new Semaphore(1);
 
   public TimeSlot(int id, String timeSlot) {
     this.id = id;
@@ -40,8 +38,7 @@ public class TimeSlot {
         }
         Thread.sleep(5000);
 
-        Platform.runLater(() -> controller.setMessage("Seats booked: " +
-            seatsSet.toString()));
+        controller.showSnacks(seatsSet);
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       } finally {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="299.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.para.InvoiceController">
+   <children>
+      <Label layoutX="14.0" layoutY="22.0" text="Movie: " />
+      <Label layoutX="150.0" layoutY="22.0" text="Time: " />
+      <Label layoutX="14.0" layoutY="67.0" text="Seats: " />
+      <Label layoutX="14.0" layoutY="119.0" text="popcorn: " />
+      <Label layoutX="150.0" layoutY="119.0" text="juice: " />
+      <Label fx:id="seats" alignment="CENTER" layoutX="51.0" layoutY="67.0" prefHeight="17.0" prefWidth="241.0" text="Label" />
+      <Label fx:id="movie" alignment="CENTER" layoutX="53.0" layoutY="22.0" prefHeight="17.0" prefWidth="91.0" text="Label" />
+      <Label fx:id="time" alignment="CENTER" layoutX="181.0" layoutY="22.0" prefHeight="17.0" prefWidth="91.0" text="Label" />
+      <Label fx:id="popcorn" alignment="CENTER" layoutX="65.0" layoutY="119.0" prefHeight="17.0" prefWidth="77.0" text="Label" />
+      <Label fx:id="juice" alignment="CENTER" layoutX="179.0" layoutY="119.0" prefHeight="17.0" prefWidth="91.0" text="Label" />
+   </children>
+</AnchorPane>

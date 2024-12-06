@@ -23,6 +23,9 @@ public class TimeSlotController extends Controller {
   @FXML
   private GridPane seatsContainer;
 
+  @FXML
+  private Button bookButton;
+
   @Override
   public void setId(int id) {
     this.timeSlotId = id;
@@ -30,7 +33,7 @@ public class TimeSlotController extends Controller {
   }
 
   private void onTimeSlotIdSet() {
-    char[] availableRows = { 'A', 'B', 'C', 'D', 'F' };
+    char[] availableRows = { 'A', 'B', 'C', 'D', 'E' };
 
     for (int j = 0; j < availableRows.length; j++) {
       char rowChar = availableRows[j];
@@ -49,11 +52,11 @@ public class TimeSlotController extends Controller {
         seatsContainer.add(seat, colIndex > 4 ? colIndex + 15 : colIndex, j);
       }
     }
+    bookButton.setDisable(true);
   }
 
   @Override
   public void setParentId(int id) {
-    System.out.println("done");
     this.movieId = id;
   }
 
@@ -65,6 +68,8 @@ public class TimeSlotController extends Controller {
       this.set.remove(id);
     else
       this.set.add(id);
+
+    bookButton.setDisable(this.set.isEmpty());
   }
 
   @FXML
@@ -96,6 +101,8 @@ public class TimeSlotController extends Controller {
     TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
     timeSlot.bookSeat(controller, set);
 
+    controller.setId(timeSlotId);
+    controller.setParentId(movieId);
     newStage.showAndWait();
     // HashMap<Integer, Movie> movieMap = App.getMovieMap();
     // Movie movie = movieMap.get(this.movieId);

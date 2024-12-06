@@ -26,6 +26,9 @@ public class MovieController extends Controller {
     HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
 
     for (TimeSlot timeSlot : timeSlotMap.values()) {
+      if (!DatabaseConnection.isTimeSlotsAvailable(timeSlot.getId(), 50)) {
+        continue;
+      }
       Button timeSlotsButton = utils.addButtonToVBox(timeSlot.toString(), timeSlot.getId());
       timeSlotsButton.setOnAction(event -> {
         try {
