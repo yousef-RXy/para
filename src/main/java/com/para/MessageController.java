@@ -14,6 +14,8 @@ import javafx.scene.control.Label;
 public class MessageController extends Controller {
   int timeSlotId;
   int movieId;
+  int popcornCount;
+  int juiceCount;
   HashSet<String> set;
 
   @FXML
@@ -61,15 +63,18 @@ public class MessageController extends Controller {
     }
   }
 
-  public void failedbookSnacks() {
+  public void failedbookSnacks(String msg, int popcornCount, int juiceCount) {
     continueButton.setVisible(true);
     continueButton.setDisable(false);
-    message.setText("Sorry not enough snacks");
+    message.setText(msg);
+    this.juiceCount = juiceCount;
+    this.popcornCount = popcornCount;
   }
 
   @FXML
   void continueToInvoice() throws IOException {
-    this.showInvoice(0, 0);
+    System.out.println(this.popcornCount + " : " + this.juiceCount);
+    this.showInvoice(this.popcornCount, this.juiceCount);
   }
 
   public void showInvoice(int popcornCount, int juiceCount) {

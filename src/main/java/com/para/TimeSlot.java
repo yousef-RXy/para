@@ -28,6 +28,7 @@ public class TimeSlot {
         for (String seatNum : seatsSet) {
           if (DatabaseConnection.isBooked(this.id, seatNum)) {
             Thread.sleep(5000);
+            mutexSemaphore.release();
             Platform.runLater(() -> controller.setMessage("Seat Already booked: " +
                 seatNum));
             return;

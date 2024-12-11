@@ -97,6 +97,10 @@ public class SnacksController extends Controller {
     scene.setRoot(loader);
     int popcornCount = popCornCounter.getText().compareTo("X") == 0 ? 0 : Integer.parseInt(popCornCounter.getText());
     int juiceCount = juiceCounter.getText().compareTo("X") == 0 ? 0 : Integer.parseInt(juiceCounter.getText());
+    if (juiceCount == 0 && popcornCount == 0) {
+      controller.showInvoice(0, 0);
+      return;
+    }
     App.getSnacksStore().bookSnacks(controller, popcornCount, juiceCount);
   }
 

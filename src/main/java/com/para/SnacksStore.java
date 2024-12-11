@@ -150,27 +150,56 @@ public class SnacksStore {
   public void bookSnacks(MessageController controller, int popcornCount, int juiceCount) {
     new Thread(() -> {
       try {
-        Thread.sleep(2000);
-        this.popcornMutex.acquire();
-        this.juiceMutex.acquire();
-        int currPopcornCount = DatabaseConnection.availableSnacks("popcorn");
-        int currJuiceCount = DatabaseConnection.availableSnacks("juice");
-        if (!(currPopcornCount >= popcornCount) || !(currJuiceCount >= juiceCount)) {
-          this.juiceMutex.release();
-          this.popcornMutex.release();
+        int currJuiceCount = 0;
+        int currPopcornCount = 0;
 
-          Platform.runLater(() -> controller.failedbookSnacks());
-          return;
+        if (popcornCount != 0) {
+          this.popcornMutex.acquire();
+          currPopcornCount = DatabaseConnection.availableSnacks("popcorn");
+          if (currPopcornCount >= popcornCount) {
+            Thread.sleep(1000);
+            decreasePopcornStore(popcornCount * -1);
+          } else {
+            Thread.sleep(1000);
+            decreasePopcornStore(currPopcornCount * -1);
+          }
+          this.popcornMutex.release();
         }
-        decreasePopcornStore(popcornCount * -1);
-        decreaseJuiceStore(juiceCount * -1);
-        Platform.runLater(() -> controller.showInvoice(popcornCount, juiceCount));
-        controller.showInvoice(popcornCount, juiceCount);
+
+        if (juiceCount != 0) {
+          this.juiceMutex.acquire();
+          currJuiceCount = DatabaseConnection.availableSnacks("juice");
+          if (currJuiceCount >= juiceCount) {
+            Thread.sleep(1000);
+            decreaseJuiceStore(juiceCount * -1);
+          } else {
+            Thread.sleep(1000);
+            decreaseJuiceStore(currJuiceCount * -1);
+          }
+          this.juiceMutex.release();
+        }
+
+        final int availablePopcorn = currPopcornCount;
+        final int availableJuice = currJuiceCount;
+        if (currPopcornCount < popcornCount && currJuiceCount >= juiceCount) {
+          Platform.runLater(
+              () -> controller.failedbookSnacks(
+                  "Sorry only available" + availablePopcorn + " popcorn,\n but the juice is waiting for you.",
+                  availablePopcorn, juiceCount));
+        } else if (currJuiceCount < juiceCount && currPopcornCount >= popcornCount) {
+          Platform.runLater(
+              () -> controller.failedbookSnacks(
+                  "Sorry only available" + availableJuice + "  juice,\n but the popcorn is waiting for you.",
+                  popcornCount, availableJuice));
+        } else if (currPopcornCount < popcornCount || currJuiceCount < juiceCount) {
+          Platform.runLater(() -> controller.failedbookSnacks(
+              "Sorry only available" + availablePopcorn + "popcorn, and " + availableJuice + "juice", availablePopcorn,
+              availableJuice));
+        } else {
+          Platform.runLater(() -> controller.showInvoice(popcornCount, juiceCount));
+        }
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
-      } finally {
-        this.juiceMutex.release();
-        this.popcornMutex.release();
       }
     }).start();
   }
