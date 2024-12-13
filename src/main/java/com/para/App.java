@@ -30,7 +30,6 @@ public class App extends Application {
 
         Stage timerStage = new Stage();
         Scene timerScene = new Scene(loadFXML("timer").load());
-        timerStage.initModality(Modality.WINDOW_MODAL);
         timerStage.setTitle("Timer");
         timerStage.setScene(timerScene);
         timerStage.show();
