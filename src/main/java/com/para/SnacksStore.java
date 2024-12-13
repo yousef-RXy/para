@@ -153,7 +153,7 @@ public class SnacksStore {
         Thread.sleep(2000);
         this.popcornMutex.acquire();
         this.juiceMutex.acquire();
-        int currPopcornCount = DatabaseConnection.availableSnacks("juice");
+        int currPopcornCount = DatabaseConnection.availableSnacks("popcorn");
         int currJuiceCount = DatabaseConnection.availableSnacks("juice");
         if (!(currPopcornCount >= popcornCount) || !(currJuiceCount >= juiceCount)) {
           this.juiceMutex.release();

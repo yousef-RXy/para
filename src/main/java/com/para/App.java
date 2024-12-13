@@ -24,17 +24,16 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("movies").load());
-        // stage.initModality(Modality.WINDOW_MODAL);
         stage.setTitle("Booking System");
         stage.setScene(scene);
         stage.show();
 
-        // Stage timerStage = new Stage();
-        // Scene timerScene = new Scene(loadFXML("timer").load());
-        // timerStage.initModality(Modality.WINDOW_MODAL);
-        // timerStage.setTitle("Timer");
-        // timerStage.setScene(timerScene);
-        // timerStage.show();
+        Stage timerStage = new Stage();
+        Scene timerScene = new Scene(loadFXML("timer").load());
+        timerStage.initModality(Modality.WINDOW_MODAL);
+        timerStage.setTitle("Timer");
+        timerStage.setScene(timerScene);
+        timerStage.show();
     }
 
     static FXMLLoader setRoot(String fxml) throws IOException {
@@ -51,7 +50,7 @@ public class App extends Application {
         DatabaseConnection.connect();
         movieMap = DatabaseConnection.FetchMovies();
         snacksStore = new SnacksStore(3, 2, 30, 30);
-        // snacksStore.start();
+        snacksStore.start();
         launch();
         System.exit(0);
     }
