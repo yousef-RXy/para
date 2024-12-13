@@ -39,7 +39,7 @@ public class DatabaseConnection {
         map.put(id, new Movie(id, name));
       }
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
     return map;
   }
@@ -56,7 +56,7 @@ public class DatabaseConnection {
         map.put(id, new TimeSlot(id, timeSlot));
       }
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
     return map;
   }
@@ -74,7 +74,7 @@ public class DatabaseConnection {
         }
       }
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
     return map;
   }
@@ -86,7 +86,7 @@ public class DatabaseConnection {
       if (result.next())
         return result.getBoolean("is_booked");
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
     return false;
   }
@@ -102,7 +102,7 @@ public class DatabaseConnection {
 
       return rowsAffected > 0;
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
       return false;
     }
   }
@@ -115,7 +115,7 @@ public class DatabaseConnection {
       if (result.next())
         count = result.getInt("count");
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
     return count;
   }
@@ -129,7 +129,7 @@ public class DatabaseConnection {
       stmt.setString(3, type);
       stmt.executeUpdate();
     } catch (SQLException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
   }
 }

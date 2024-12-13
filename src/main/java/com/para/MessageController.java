@@ -59,7 +59,7 @@ public class MessageController extends Controller {
       controller.setSeats(set);
       scene.setRoot(loader);
     } catch (IOException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
   }
 
@@ -73,7 +73,6 @@ public class MessageController extends Controller {
 
   @FXML
   void continueToInvoice() throws IOException {
-    System.out.println(this.popcornCount + " : " + this.juiceCount);
     this.showInvoice(this.popcornCount, this.juiceCount);
   }
 
@@ -90,7 +89,7 @@ public class MessageController extends Controller {
         System.err.println("Scene not found for message controller!");
       }
     } catch (IOException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
     }
   }
 }

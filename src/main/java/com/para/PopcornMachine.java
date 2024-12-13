@@ -20,7 +20,7 @@ public class PopcornMachine implements SnackMachine {
         Thread.sleep(60000);
         this.isStillRunning = !this.mainStore.increasePopcornStore(this.id);
       } catch (InterruptedException ex) {
-        thread.interrupt();
+        Thread.currentThread().interrupt();
       }
     }
     System.out.println("popcornMachine Stopped");
@@ -39,7 +39,7 @@ public class PopcornMachine implements SnackMachine {
     try {
       this.thread.join();
     } catch (InterruptedException e) {
-      thread.interrupt();
+      Thread.currentThread().interrupt();
     }
   }
 

@@ -21,7 +21,7 @@ public class JuiceMachine implements SnackMachine {
         Thread.sleep(40000);
         this.isStillRunning = !this.mainStore.increaseJuiceStore(this.id);
       } catch (InterruptedException ex) {
-        thread.interrupt();
+        Thread.currentThread().interrupt();
       }
     }
     System.out.println("JuiceMachine Stopped");
@@ -40,7 +40,7 @@ public class JuiceMachine implements SnackMachine {
     try {
       this.thread.join();
     } catch (InterruptedException e) {
-      thread.interrupt();
+      Thread.currentThread().interrupt();
     }
   }
 

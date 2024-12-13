@@ -98,7 +98,7 @@ public class SnacksStore {
 
       return availablePopcorn != 0;
     } catch (InterruptedException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
       return false;
     }
   }
@@ -142,7 +142,7 @@ public class SnacksStore {
 
       return availableJuice != 0;
     } catch (InterruptedException e) {
-      Thread.interrupted();
+      Thread.currentThread().interrupt();
       return false;
     }
   }
@@ -184,16 +184,17 @@ public class SnacksStore {
         if (currPopcornCount < popcornCount && currJuiceCount >= juiceCount) {
           Platform.runLater(
               () -> controller.failedbookSnacks(
-                  "Sorry only available" + availablePopcorn + " popcorn,\n but the juice is waiting for you.",
+                  "Sorry only available " + availablePopcorn + " popcorn,\n but the juice is waiting for you.",
                   availablePopcorn, juiceCount));
         } else if (currJuiceCount < juiceCount && currPopcornCount >= popcornCount) {
           Platform.runLater(
               () -> controller.failedbookSnacks(
-                  "Sorry only available" + availableJuice + "  juice,\n but the popcorn is waiting for you.",
+                  "Sorry only available " + availableJuice + "  juice,\n but the popcorn is waiting for you.",
                   popcornCount, availableJuice));
         } else if (currPopcornCount < popcornCount || currJuiceCount < juiceCount) {
           Platform.runLater(() -> controller.failedbookSnacks(
-              "Sorry only available" + availablePopcorn + "popcorn, and " + availableJuice + "juice", availablePopcorn,
+              "Sorry only available " + availablePopcorn + " popcorn, and " + availableJuice + " juice ",
+              availablePopcorn,
               availableJuice));
         } else {
           Platform.runLater(() -> controller.showInvoice(popcornCount, juiceCount));
