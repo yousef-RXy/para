@@ -20,8 +20,7 @@ public class utils {
     return button;
   }
 
-  public static Controller onButtonToDisplayClicked(String fxml, ActionEvent event) throws IOException {
-    Stage newStage = new Stage();
+  public static Controller onButtonToDisplayClicked(Stage newStage, String fxml, ActionEvent event) throws IOException {
     FXMLLoader fxmlLoader = App.loadFXML(fxml);
     Parent loader = fxmlLoader.load();
 

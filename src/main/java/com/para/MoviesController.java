@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class MoviesController extends Controller {
 
@@ -32,6 +33,7 @@ public class MoviesController extends Controller {
 
   @FXML
   void onMovieClicked(ActionEvent event) throws IOException {
-    utils.onButtonToDisplayClicked("movie", event);
+    Stage newStage = new Stage();
+    utils.onButtonToDisplayClicked(newStage, "movie", event);
   }
 }

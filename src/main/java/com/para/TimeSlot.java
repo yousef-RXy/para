@@ -6,9 +6,9 @@ import java.util.concurrent.Semaphore;
 import javafx.application.Platform;
 
 public class TimeSlot {
-  private int id;
-  private String timeSlot;
-  private Semaphore mutexSemaphore = new Semaphore(1);
+  private final int id;
+  private final String timeSlot;
+  private final Semaphore mutexSemaphore = new Semaphore(1);
 
   public TimeSlot(int id, String timeSlot) {
     this.id = id;

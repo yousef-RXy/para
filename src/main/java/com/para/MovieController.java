@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class MovieController extends Controller {
   int movieId;
@@ -44,8 +45,10 @@ public class MovieController extends Controller {
 
   @FXML
   void onTimeSlotClicked(ActionEvent event) throws IOException {
-    Controller controller = utils.onButtonToDisplayClicked("timeSlots", event);
+    Stage newStage = new Stage();
+    TimeSlotController controller = (TimeSlotController) utils.onButtonToDisplayClicked(newStage, "timeSlots", event);
     controller.setParentId(movieId);
+    newStage.setOnCloseRequest(controller::onCloseRequest);
   }
 
   @FXML

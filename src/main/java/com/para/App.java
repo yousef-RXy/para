@@ -48,10 +48,11 @@ public class App extends Application {
     public static void main(String[] args) {
         DatabaseConnection.connect();
         movieMap = DatabaseConnection.FetchMovies();
-        snacksStore = new SnacksStore(3, 2, 30, 30);
+        snacksStore = new SnacksStore(3, 2, 0, 0, 30, 30);
         snacksStore.start();
         launch();
-        System.exit(0);
+        snacksStore.stop();
+        // System.exit(0);
     }
 
 }

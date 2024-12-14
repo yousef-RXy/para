@@ -3,9 +3,9 @@ package com.para;
 import java.util.HashMap;
 
 public class Movie {
-  private int id;
-  private String name;
-  private HashMap<Integer, TimeSlot> timeSlotsMap;
+  private final int id;
+  private final String name;
+  private final HashMap<Integer, TimeSlot> timeSlotsMap;
 
   public Movie(int id, String name) {
     this.id = id;
