@@ -21,29 +21,31 @@ public class utils {
   }
 
   public static Controller onButtonToDisplayClicked(Stage newStage, String fxml, ActionEvent event) throws IOException {
-    FXMLLoader fxmlLoader = App.loadFXML(fxml);
-    Parent loader = fxmlLoader.load();
+    if (App.getThreadingMode().equals(ModeEnum.PARALLEL)) {
+      FXMLLoader fxmlLoader = App.loadFXML(fxml);
+      Parent loader = fxmlLoader.load();
 
-    Controller controller = fxmlLoader.getController();
-    Button button = (Button) (event.getSource());
-    int id = Integer.parseInt(button.getId());
-    controller.setId(id);
+      Controller controller = fxmlLoader.getController();
+      Button button = (Button) (event.getSource());
+      int id = Integer.parseInt(button.getId());
+      controller.setId(id);
 
-    newStage.setTitle(fxml + " " + id);
-    Scene scene = new Scene(loader);
-    newStage.setScene(scene);
-    newStage.initModality(Modality.WINDOW_MODAL);
-    newStage.show();
+      newStage.setTitle(fxml + " " + id);
+      Scene scene = new Scene(loader);
+      newStage.setScene(scene);
+      newStage.initModality(Modality.WINDOW_MODAL);
+      newStage.show();
 
-    return controller;
+      return controller;
+    } else {
+      FXMLLoader fxmlLoader = App.setRoot(fxml);
+      Controller controller = fxmlLoader.getController();
+      Button button = (Button) (event.getSource());
+      int id = Integer.parseInt(button.getId());
+      controller.setId(id);
 
-    // FXMLLoader fxmlLoader = App.setRoot(fxml);
-    // Controller controller = fxmlLoader.getController();
-    // Button button = (Button) (event.getSource());
-    // int id = Integer.parseInt(button.getId());
-    // controller.setId(id);
-
-    // return controller;
+      return controller;
+    }
   }
 
   public static Controller returnParent(String fxml, int id, int parentId) throws IOException {

@@ -51,42 +51,44 @@ public class TimeSlotController extends Controller {
       timer.stop();
     }
 
-    timer = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
-      for (char rowChar : availableRows) {
-        for (int i = 1; i <= 10; i++) {
-          String id = "" + rowChar + i;
-          if (!bookedSet.contains(id) && DatabaseConnection.isBooked(this.timeSlotId, id)) {
-            if (set.contains(id)) {
-              set.remove(id);
-              if (set.isEmpty()) {
-                bookButton.setDisable(true);
+    if (App.getThreadingMode().equals(ModeEnum.PARALLEL)) {
+      timer = new Timeline(new KeyFrame(Duration.millis(1000), e -> {
+        for (char rowChar : availableRows) {
+          for (int i = 1; i <= 10; i++) {
+            String id = "" + rowChar + i;
+            if (!bookedSet.contains(id) && DatabaseConnection.isBooked(this.timeSlotId, id)) {
+              if (set.contains(id)) {
+                set.remove(id);
+                if (set.isEmpty()) {
+                  bookButton.setDisable(true);
+                }
+                try {
+                  FXMLLoader fxmlLoader = App.loadFXML("message");
+                  Parent loader = fxmlLoader.load();
+                  MessageController controller = fxmlLoader.getController();
+                  controller.setMessage("seat " + id + " booked");
+
+                  Stage newStage = new Stage();
+                  newStage.setTitle("seat " + id + " booked");
+
+                  Scene scene = new Scene(loader);
+                  newStage.setScene(scene);
+
+                  newStage.show();
+                } catch (IOException e1) {
+                  Thread.currentThread().interrupt();
+                }
               }
-              try {
-                FXMLLoader fxmlLoader = App.loadFXML("message");
-                Parent loader = fxmlLoader.load();
-                MessageController controller = fxmlLoader.getController();
-                controller.setMessage("seat " + id + " booked");
-
-                Stage newStage = new Stage();
-                newStage.setTitle("seat " + id + " booked");
-
-                Scene scene = new Scene(loader);
-                newStage.setScene(scene);
-
-                newStage.show();
-              } catch (IOException e1) {
-                Thread.currentThread().interrupt();
-              }
+              CheckBox seat = (CheckBox) seatsContainer.lookup("#" + id);
+              seat.setDisable(true);
+              seat.setSelected(true);
             }
-            CheckBox seat = (CheckBox) seatsContainer.lookup("#" + id);
-            seat.setDisable(true);
-            seat.setSelected(true);
           }
         }
-      }
-    }));
-    timer.setCycleCount(Animation.INDEFINITE);
-    timer.play();
+      }));
+      timer.setCycleCount(Animation.INDEFINITE);
+      timer.play();
+    }
   }
 
   public void onCloseRequest(WindowEvent event) {
@@ -136,48 +138,51 @@ public class TimeSlotController extends Controller {
 
   @FXML
   void onBookClicked(ActionEvent event) throws IOException {
-    FXMLLoader fxmlLoader = App.loadFXML("message");
-    Parent loader = fxmlLoader.load();
-    MessageController controller = fxmlLoader.getController();
+    if (App.getThreadingMode().equals(ModeEnum.PARALLEL)) {
+      FXMLLoader fxmlLoader = App.loadFXML("message");
+      Parent loader = fxmlLoader.load();
+      MessageController controller = fxmlLoader.getController();
 
-    Stage newStage = new Stage();
-    newStage.setTitle("Booking in Progress Movie: " + movieId + " timeSlot: " +
-        timeSlotId);
+      Stage newStage = new Stage();
+      newStage.setTitle("Booking in Progress Movie: " + movieId + " timeSlot: " +
+          timeSlotId);
 
-    Scene scene = new Scene(loader);
-    newStage.setScene(scene);
+      Scene scene = new Scene(loader);
+      newStage.setScene(scene);
 
-    newStage.initModality(Modality.WINDOW_MODAL);
-    Stage parentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-    newStage.initOwner(parentStage);
+      newStage.initModality(Modality.WINDOW_MODAL);
+      Stage parentStage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+      newStage.initOwner(parentStage);
 
-    HashMap<Integer, Movie> movieMap = App.getMovieMap();
-    Movie movie = movieMap.get(this.movieId);
+      HashMap<Integer, Movie> movieMap = App.getMovieMap();
+      Movie movie = movieMap.get(this.movieId);
 
-    HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
-    TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
+      HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
+      TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
 
-    @SuppressWarnings("unchecked")
-    final HashSet<String> finalSet = (HashSet<String>) set.clone();
-    timeSlot.bookSeat(controller, finalSet);
+      @SuppressWarnings("unchecked")
+      final HashSet<String> finalSet = (HashSet<String>) set.clone();
+      timeSlot.bookSeat(controller, finalSet);
 
-    bookButton.setDisable(true);
-    set.clear();
+      bookButton.setDisable(true);
+      set.clear();
 
-    controller.setId(timeSlotId);
-    controller.setParentId(movieId);
-    newStage.showAndWait();
-    // HashMap<Integer, Movie> movieMap = App.getMovieMap();
-    // Movie movie = movieMap.get(this.movieId);
+      controller.setId(timeSlotId);
+      controller.setParentId(movieId);
+      newStage.showAndWait();
+    } else {
+      HashMap<Integer, Movie> movieMap = App.getMovieMap();
+      Movie movie = movieMap.get(this.movieId);
 
-    // HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
-    // TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
+      HashMap<Integer, TimeSlot> timeSlotMap = movie.getTimeSlotsMap();
+      TimeSlot timeSlot = timeSlotMap.get(this.timeSlotId);
 
-    // FXMLLoader fxmlLoader = App.setRoot("message");
-    // MessageController controller = fxmlLoader.getController();
+      FXMLLoader fxmlLoader = App.setRoot("message");
+      MessageController controller = fxmlLoader.getController();
 
-    // controller.setId(timeSlotId);
-    // controller.setParentId(movieId);
-    // timeSlot.bookSeat(controller, set);
+      controller.setId(timeSlotId);
+      controller.setParentId(movieId);
+      timeSlot.bookSeat(controller, set);
+    }
   }
 }

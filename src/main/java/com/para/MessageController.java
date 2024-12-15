@@ -40,6 +40,7 @@ public class MessageController extends Controller {
 
   @FXML
   void onBackButtonClicked(ActionEvent event) throws IOException {
+    System.out.println("timeSlots" + " " + this.timeSlotId + " " + this.movieId);
     utils.returnParent("timeSlots", this.timeSlotId, this.movieId);
   }
 

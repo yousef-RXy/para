@@ -12,6 +12,7 @@ public class App extends Application {
     private static HashMap<Integer, Movie> movieMap = new HashMap<>();
     private static SnacksStore snacksStore;
     private static Scene scene;
+    private static ModeEnum threadingMode;
 
     public static HashMap<Integer, Movie> getMovieMap() {
         return movieMap;
@@ -19,6 +20,10 @@ public class App extends Application {
 
     public static SnacksStore getSnacksStore() {
         return snacksStore;
+    }
+
+    public static ModeEnum getThreadingMode() {
+        return threadingMode;
     }
 
     @Override
@@ -46,13 +51,16 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
+        threadingMode = ModeEnum.PARALLEL;
         DatabaseConnection.connect();
         movieMap = DatabaseConnection.FetchMovies();
-        snacksStore = new SnacksStore(3, 2, 0, 0, 30, 30);
-        snacksStore.start();
+        if (threadingMode.equals(ModeEnum.PARALLEL)) {
+            snacksStore = new SnacksStore(3, 2, 0, 0, 30, 30);
+            snacksStore.start();
+        }
         launch();
-        snacksStore.stop();
-        // System.exit(0);
+        if (threadingMode.equals(ModeEnum.PARALLEL)) {
+            snacksStore.stop();
+        }
     }
-
 }

@@ -6,7 +6,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.para.MovieController">
    <children>
-      <!-- <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackButtonClicked" text="&lt;-" /> -->
+      <!-- SEQUENTIAL -->
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackButtonClicked" text="&lt;-" />
       <VBox fx:id="TimeSlotsContainer" layoutX="50.0" layoutY="50.0" prefHeight="250.0" prefWidth="250.0" />
    </children>
 </AnchorPane>
